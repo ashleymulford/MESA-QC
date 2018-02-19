@@ -1,0 +1,27 @@
+Command commands:
+ls - lists all my directories
+cd - change directory, type this and then the directory to get into
+cd .. - go back out of a directory
+cp - copy, type cp /to/file /from
+pwd - print working directory
+
+ashley@wheelerlab3:~/Scripts$ == /home/ashley/Scripts
+
+In home, directories: 
+	Plinkfiles, R, Scripts
+In Plinkfiles: 
+	MESA_all_merged, MESA_all_autosome files
+In Scripts:
+	affy_2_rsid.py
+
+Plink commands:
+call file with: --bfile file_name
+	--bfile consists of --bed, --bim, and --fam
+end commands with --out
+
+#changed affymatrix id to rsid
+	in python script in directory: /home/ashley/Scripts
+	cp ex: cp /home/lauren/scripts/affy_2_rsid.py /home/ashley/Scripts
+
+#got rid of nonautosomal chromosome data and unspecificed chromosome data
+	in plink
