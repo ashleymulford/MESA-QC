@@ -21,9 +21,19 @@ end commands with --out directory_output_files_to_go_in/file_name
 	this creates the output, which is a new file or files
 --make-bed: makes new bed/bim/fam files
 
-#changed affymatrix id to rsid
+#1 changed affymatrix id to rsid
 	in python script in directory: /home/ashley/Scripts
 	cp ex: cp /home/lauren/scripts/affy_2_rsid.py /home/ashley/Scripts
 
-#got rid of nonautosomal chromosome data and unspecificed chromosome data
+#2 got rid of nonautosomal chromosome data and unspecificed chromosome data
 	in plink
+
+#3 identified missings with --missing in plink
+
+#4 created new bfiles with --geno 0.01 and --make-bed to create files with 99% (of something I dont remember) in plink
+
+#5 calculated HWE Statistics with --hardy in plink
+
+#6 Pruned data with --indep-pairwise 50 5 0.3
+
+#7 relationship check with --extract, followed by --genome with min 0.05
