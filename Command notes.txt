@@ -15,9 +15,11 @@ In Scripts:
 	affy_2_rsid.py
 
 Plink commands:
-call file with: --bfile file_name
+call file with: --bfile directory_file_located_in(if necessary)/file_name
 	--bfile consists of --bed, --bim, and --fam
-end commands with --out
+end commands with --out directory_output_files_to_go_in/file_name
+	this creates the output, which is a new file or files
+--make-bed: makes new bed/bim/fam files
 
 #changed affymatrix id to rsid
 	in python script in directory: /home/ashley/Scripts
