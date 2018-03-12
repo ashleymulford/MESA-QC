@@ -21,6 +21,19 @@ end commands with --out directory_output_files_to_go_in/file_name
 	this creates the output, which is a new file or files
 --make-bed: makes new bed/bim/fam files
 
+R Studio Set Up:
+	install.packages("dplyr")
+	install.packages("tidyr")
+	install.packages("ggplot2")
+	install.packages("data.table")
+	library(dplyr)
+	library(tidyr)
+	library(ggplot2)
+	library(data.table)
+	"%&%" = function(a,b) paste(a,b,sep="")
+	my.dir = "/home/ashley/PLinkfiles/"
+
+
 #1 changed affymatrix id to rsid
 	in python script in directory: /home/ashley/Scripts
 	cp ex: cp /home/lauren/scripts/affy_2_rsid.py /home/ashley/Scripts
@@ -34,6 +47,23 @@ end commands with --out directory_output_files_to_go_in/file_name
 
 #5 calculated HWE Statistics with --hardy in plink
 
-#6 Pruned data with --indep-pairwise 50 5 0.3
+#6 Pruned data with --indep-pairwise 50 5 0.3 in plink
 
-#7 relationship check with --extract, followed by --genome with min 0.05
+#7 relationship check with --extract, followed by --genome --min 0.05 in plink
+
+#8 Switch to R 
+	Assign variable: lmiss <- fread(my.dir %&% "MESA_all_merged_1.lmiss")
+	Create histogram: hist(lmiss$F_MISS)
+	
+#9 Make GGplot comparing Z0 and Z1 relationship: 
+	ibd <-read.table(my.dir%&%"MESA_all_merged_autosome.geno0.01.LD3.0.05.genome",header=T)
+	png(filename="mesa_all_ibd.png",res=100)
+	ggplot(data=ibd,aes(x=Z0,y=Z1))+geom_point(alpha=0.25)+theme_bw()
+	dev.off()
+	
+#10 Back in Plink: Separate Populations
+
+
+
+
+	
