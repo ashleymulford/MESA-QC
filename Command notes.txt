@@ -33,13 +33,14 @@ R Studio Set Up:
 	"%&%" = function(a,b) paste(a,b,sep="")
 	my.dir = "/home/ashley/PLinkfiles/"
 
+### Steps taken to refine the data set
 
 #1 changed affymatrix id to rsid
 	in python script in directory: /home/ashley/Scripts
 	cp ex: cp /home/lauren/scripts/affy_2_rsid.py /home/ashley/Scripts
 
 #2 got rid of nonautosomal chromosome data and unspecificed chromosome data
-	in plink
+	use --autosome in plink
 
 #3 identified missings with --missing in plink
 
@@ -49,7 +50,7 @@ R Studio Set Up:
 
 #6 Pruned data with --indep-pairwise 50 5 0.3 in plink
 
-#7 relationship check with --extract, followed by --genome --min 0.05 in plink
+#7 Relationship check with --extract, followed by --genome --min 0.05 in plink
 
 #8 Switch to R 
 	Assign variable: lmiss <- fread(my.dir %&% "MESA_all_merged_1.lmiss")
@@ -62,8 +63,39 @@ R Studio Set Up:
 	dev.off()
 	
 #10 Back in Plink: Separate Populations
+	plink --bfile MESA_all_merged_autosome.geno0.01 --keep afa_samples.txt --make-bed --out MESA_AFA_merged_autosome.geno0.01
+	plink --bfile MESA_all_merged_autosome.geno0.01 --keep his_samples.txt --make-bed --out MESA_HIS_merged_autosome.geno0.01
+	plink --bfile MESA_all_merged_autosome.geno0.01 --keep cau_samples.txt --make-bed --out MESA_CAU_merged_autosome.geno0.01
 
+#11 Pruned data for individual populaitons with --indep-pairwise 50 5 0.3 in plink
 
+#12 Relationship Check for individual populations with --extract, followed by --genome --min 0.05 in plink
 
+#13 Check Heterozygosity with --het in plink 
+
+#14 Switch to R: 
+Create Histogram for individual populations:
+	afa_het<-read.table(my.dir %&% "MESA_AFA_merged_autosome.geno0.01.het", header = T)
+	hist(afa_het$F,50)
+	summary(afa_het$F)
+	
+Create GGplot for individual populations: 
+	sortHET_afa<-afa_het[order(afa_het$F),]
+	outliers_afa<-data.frame()
+	for(i in 1:length(sortHET_afa$F)){
+		if(sortHET_afa[i,6] > (mean(sortHET_afa$F)+3*sd(sortHET_afa$F))){
+			outliers <- rbind(outliers,sortHET_afa[i,])
+		}
+		if(sortHET_afa[i,6] < (mean(sortHET_afa$F)-3*sd(sortHET_afa$F))){
+			outliers <- rbind(outliers,sortHET_afa[i,])
+		}
+	}
+	hetoutliers_afa <- select(outliers_afa,FID,IID)
+	dim(hetoutliers)
+	write.table(hetoutliers_afa,file=my.dir %&% "afa_3sd.txt",quote=F,col.names=F,row.names=F)
+
+	
+
+	
 
 	
