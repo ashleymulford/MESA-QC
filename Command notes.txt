@@ -10,7 +10,8 @@ ashley@wheelerlab3:~/Scripts$ == /home/ashley/Scripts
 In home, directories: 
 	Plinkfiles, R, Scripts
 In Plinkfiles: 
-	MESA_all_merged, MESA_all_autosome files
+	MESAfiles:
+		MESAnewfiles
 In Scripts:
 	affy_2_rsid.py
 
@@ -48,7 +49,7 @@ R Studio Set Up:
 
 #5 calculated HWE Statistics with --hardy in plink
 
-#6 Pruned data with --indep-pairwise 50 5 0.3 in plink
+#6 Linkage Disequilibrium (LD) Pruning data with --indep-pairwise 50 5 0.3 in plink
 
 #7 Relationship check with --extract, followed by --genome --min 0.05 in plink
 
@@ -67,7 +68,7 @@ R Studio Set Up:
 	plink --bfile MESA_all_merged_autosome.geno0.01 --keep his_samples.txt --make-bed --out MESA_HIS_merged_autosome.geno0.01
 	plink --bfile MESA_all_merged_autosome.geno0.01 --keep cau_samples.txt --make-bed --out MESA_CAU_merged_autosome.geno0.01
 
-#11 Pruned data for individual populaitons with --indep-pairwise 50 5 0.3 in plink
+#11 Linkage Disequilibrium (LD) Pruning data for individual populaitons with --indep-pairwise 50 5 0.3 in plink
 
 #12 Relationship Check for individual populations with --extract, followed by --genome --min 0.05 in plink
 
@@ -80,6 +81,22 @@ Create Histogram for individual populations:
 	summary(afa_het$F)
 	
 Create GGplot for individual populations: 
+	ibd_afa <- read.table(my.dir %&% "MESA_AFA_merged_autosome.geno0.01.LD3.0.05.genome",header=T)
+	png(filename="mesa_afa_ibd.png",res=100)
+	ggplot(data=ibd_afa,aes(x=Z0,y=Z1))+geom_point(alpha=0.25)+theme_bw()
+	dev.off()
+	
+	ibd_his <- read.table(my.dir %&% "MESA_HIS_merged_autosome.geno0.01.LD3.0.05.genome",header=T)
+	png(filename="mesa_his_ibd.png",res=100)
+	ggplot(data=ibd_his,aes(x=Z0,y=Z1))+geom_point(alpha=0.25)+theme_bw()
+	dev.off()
+	
+	ibd_cau <- read.table(my.dir %&% "MESA_CAU_merged_autosome.geno0.01.LD3.0.05.genome",header=T)
+	png(filename="mesa_his_ibd.png",res=100)
+	ggplot(data=ibd_his,aes(x=Z0,y=Z1))+geom_point(alpha=0.25)+theme_bw()
+	dev.off()
+
+Create table for Outliers:
 	sortHET_afa<-afa_het[order(afa_het$F),]
 	outliers_afa<-data.frame()
 	for(i in 1:length(sortHET_afa$F)){
@@ -93,9 +110,107 @@ Create GGplot for individual populations:
 	hetoutliers_afa <- select(outliers_afa,FID,IID)
 	dim(hetoutliers)
 	write.table(hetoutliers_afa,file=my.dir %&% "afa_3sd.txt",quote=F,col.names=F,row.names=F)
+	
+#15 Back in Plink: Remove outliers not within +/- 3 SD, using txt file from R
+	plink --bfile MESA_AFA_merged_autosome.geno0.01 --remove afa_rels_3sd.txt --make-bed --out MESA_AFA_merged_autosome.geno0.01.sd
+	plink --bfile MESA_HIS_merged_autosome.geno0.01 --remove his_rels_3sd.txt --make-bed --out MESA_HIS_merged_autosome.geno0.01.sd
+	plink --bfile MESA_CAU_merged_autosome.geno0.01 --remove cau_rels_3sd.txt --make-bed --out MESA_CAU_merged_autosome.geno0.01.sd
 
+#16 Created new directories within Plinkfiles: 
+	mkdir MESAfiles
+	then within MESAfiles; mkdir MESAnewfiles
+	working dir is now: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles
+ 
+#17 Convert from hg18 to hg19:
+Must make ped/map files:
+	plink --bfile MESA_AFA_merged_autosome.geno0.01.sd --recode --out MESA_AFA_4lift
+	plink --bfile MESA_HIS_merged_autosome.geno0.01.sd --recode --out MESA_HIS_4lift
+	plink --bfile MESA_CAU_merged_autosome.geno0.01.sd --recode --out MESA_CAU_4lift
+	
+Use python script for conversion, script uses ped/map files:
+	AFA:
+	python /home/lauren/MESA_dbGaP_55081/all_mesa_merged/liftover/LiftMap.py -m MESA_AFA_4lift.map -p MESA_AFA_4lift.ped -o mesa_afa_new
+	plink --file MESA_AFA_4lift --exclude mesa_afa_new.bed.unlifted --recode --out AFA_tolift
+	python /home/lauren/MESA_dbGaP_55081/all_mesa_merged/liftover/LiftMap.py -m AFA_tolift.map -p AFA_tolift.ped -o mesa_afa_use
+	plink --file mesa_afa_use --make-bed --out MESA_AFA_lifted_final
+	
+	HIS:
+	python /home/lauren/MESA_dbGaP_55081/all_mesa_merged/liftover/LiftMap.py -m MESA_HIS_4lift.map -p MESA_HIS_4lift.ped -o mesa_his_new
+	plink --file MESA_HIS_4lift --exclude mesa_his_new.bed.unlifted --recode --out HIS_tolift
+	python /home/lauren/MESA_dbGaP_55081/all_mesa_merged/liftover/LiftMap.py -m HIS_tolift.map -p HIS_tolift.ped -o mesa_his_use
+	plink --file mesa_his_use --make-bed --out MESA_HIS_lifted_final
+
+	CAU:
+	python /home/lauren/MESA_dbGaP_55081/all_mesa_merged/liftover/LiftMap.py -m MESA_CAU_4lift.map -p MESA_CAU_4lift.ped -o mesa_cau_new
+	plink --file MESA_CAU_4lift --exclude mesa_cau_new.bed.unlifted --recode --out CAU_tolift
+	python /home/lauren/MESA_dbGaP_55081/all_mesa_merged/liftover/LiftMap.py -m CAU_tolift.map -p CAU_tolift.ped -o mesa_cau_use
+	plink --file mesa_cau_use --make-bed --out MESA_CAU_lifted_final
+	
+#18 Filter unmerged by genotype rate and minor allele frenquency (maf):
+	plink --bfile MESA_AFA_lifted_final --geno 0.05 --maf 0.05 --make-bed  --out MESA_AFA_lifted_filt
+	plink --bfile MESA_HIS_lifted_final --geno 0.05 --maf 0.05 --make-bed  --out MESA_HIS_lifted_filt
+	plink --bfile MESA_CAU_lifted_final --geno 0.05 --maf 0.05 --make-bed  --out MESA_CAU_lifted_filt
+	
+#19 Linkage Disequilibrium (LD) Pruning of unmerged MESA files with removed individuals and make ped/map files:
+	plink --bfile MESA_AFA_lifted_filt --indep-pairwise 50 5 0.3 --recode --out MESA_AFA_autosome.geno0.01.sd.pruned
+	plink --bfile MESA_HIS_lifted_filt --indep-pairwise 50 5 0.3 --recode --out MESA_HIS_autosome.geno0.01.sd.pruned
+	plink --bfile MESA_CAU_lifted_filt --indep-pairwise 50 5 0.3 --recode --out MESA_CAU_autosome.geno0.01.sd.pruned
+
+#20 Merge pruned data with HAPMAP, this step filters out snps not included in HAPMAP:
+	AFA:
+	Will get error, however it generates .missnp file that is need to remove snps:
+	plink --bfile MESA_AFA_merged_autosome.geno0.01.sd.4pca --bmerge /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bed  /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bim /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.fam --make-bed --out MESA_AFA_mergedHAPMAP
+	
+	Then using generated .missnp file:
+	plink --bfile /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig --exclude MESA_AFA_mergedHAPMAP-merge.missnp --make-bed --out hapmap19use
+
+	Merge again:
+	plink --bfile MESA_AFA_4hapmerge --bmerge hapmap19use.bed hapmap19use.bim hapmap19use.fam --make-bed --out MESA_AFA_mergedHAPMAP
+
+	HIS:
+	Will get error, however it generates .missnp file that is need to remove snps:
+	plink --bfile MESA_HIS_merged_autosome.geno0.01.sd.4pca --bmerge /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bed  /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bim /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.fam --make-bed --out MESA_HIS_mergedHAPMAP
+	
+	Then using generated .missnp file:
+	plink --bfile /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig --exclude MESA_HIS_mergedHAPMAP-merge.missnp --make-bed --out hapmap19use
+
+	Merge again:
+	plink --bfile MESA_HIS_4hapmerge --bmerge hapmap19use.bed hapmap19use.bim hapmap19use.fam --make-bed --out MESA_HIS_mergedHAPMAP
+
+	CAU:
+	Will get error, however it generates .missnp file that is need to remove snps:
+	plink --bfile MESA_CAU_merged_autosome.geno0.01.sd.4pca --bmerge /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bed  /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bim /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.fam --make-bed --out MESA_CAU_mergedHAPMAP
+	
+	Then using generated .missnp file:
+	plink --bfile /home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig --exclude MESA_CAU_mergedHAPMAP-merge.missnp --make-bed --out hapmap19use
+
+	Merge again:
+	plink --bfile MESA_CAU_4hapmerge --bmerge hapmap19use.bed hapmap19use.bim hapmap19use.fam --make-bed --out MESA_CAU_mergedHAPMAP
+
+#21 Filter merged by genotype rate and minor allele frenquency (maf):
+	plink --bfile MESA_AFA_mergedHAPMAP --geno 0.05 --maf 0.05 --make-bed   --out MESA_AFA_mergedHAPMAP0.05
+	plink --bfile MESA_HIS_mergedHAPMAP --geno 0.05 --maf 0.05 --make-bed  --out MESA_HIS_mergedHAPMAP0.05
+	plink --bfile MESA_CAU_mergedHAPMAP--geno 0.05 --maf 0.05 --make-bed  --out MESA_CAU_mergedHAPMAP0.05
+
+#22 Linkage Disequilibrium (LD) Pruning of merged MESA files with removed individuals and make ped/map files:
+	plink --bfile MESA_AFA_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode  --out MESA_AFA_mergedHAPMAP0.05
+	plink --bfile  MESA_HIS_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode --out MESA_HIS_mergedHAPMAP0.05
+	plink --bfile MESA_CAU_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode --out MESA_CAU_mergedHAPMAP0.05
+
+#23 Reformat fam file for Principle Component Analysis (PCA) (this is in linix):
+	Unmerged:
+	awk '{print $1, $2, $3, $4, $5, 1}' MESA_AFA_lifted_filt.fam > MESA_AFA_autosome.geno0.01.sd.4pca.fam
+	awk '{print $1, $2, $3, $4, $5, 1}' MESA_HIS_lifted_filt.fam > MESA_HIS_autosome.geno0.01.sd.4pca.fam
+	awk '{print $1, $2, $3, $4, $5, 1}' MESA_CAU_lifted_filt.fam > MESA_CAU_autosome.geno0.01.sd.4pca.fam
+
+	Merged:
+	awk '{print $1, $2, $3, $4, $5, 1}' MESA_AFA_mergedHAPMAP0.05.fam > MESA_AFA_merged_hapmap.4pca.fam
+	awk '{print $1, $2, $3, $4, $5, 1}' MESA_HIS_mergedHAPMAP0.05.fam > MESA_HIS_merged_hapmap.4pca.fam
+	awk '{print $1, $2, $3, $4, $5, 1}' MESA_CAU_mergedHAPMAP0.05.fam > MESA_CAU_merged_hapmap.4pca.fam
+
+#24 
 	
 
-	
 
-	
+
+
