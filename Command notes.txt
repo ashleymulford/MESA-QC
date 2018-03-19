@@ -188,13 +188,13 @@ Use python script for conversion, script uses ped/map files:
 	plink --bfile MESA_CAU_lifted_filt --bmerge hapmap19use.bed hapmap19use.bim hapmap19use.fam --make-bed --out MESA_CAU_mergedHAPMAP
 
 #21 Filter merged by genotype rate and minor allele frenquency (maf):
-	plink --bfile MESA_AFA_mergedHAPMAP --geno 0.05 --maf 0.05 --make-bed   --out MESA_AFA_mergedHAPMAP0.05
+	plink --bfile MESA_AFA_mergedHAPMAP --geno 0.05 --maf 0.05 --make-bed  --out MESA_AFA_mergedHAPMAP0.05
 	plink --bfile MESA_HIS_mergedHAPMAP --geno 0.05 --maf 0.05 --make-bed  --out MESA_HIS_mergedHAPMAP0.05
-	plink --bfile MESA_CAU_mergedHAPMAP--geno 0.05 --maf 0.05 --make-bed  --out MESA_CAU_mergedHAPMAP0.05
+	plink --bfile MESA_CAU_mergedHAPMAP --geno 0.05 --maf 0.05 --make-bed  --out MESA_CAU_mergedHAPMAP0.05
 
 #22 Linkage Disequilibrium (LD) Pruning of merged MESA files with removed individuals and make ped/map files:
-	plink --bfile MESA_AFA_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode  --out MESA_AFA_mergedHAPMAP0.05
-	plink --bfile  MESA_HIS_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode --out MESA_HIS_mergedHAPMAP0.05
+	plink --bfile MESA_AFA_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode --out MESA_AFA_mergedHAPMAP0.05
+	plink --bfile MESA_HIS_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode --out MESA_HIS_mergedHAPMAP0.05
 	plink --bfile MESA_CAU_mergedHAPMAP0.05 --indep-pairwise 50 5 0.3 --recode --out MESA_CAU_mergedHAPMAP0.05
 
 #23 Reformat fam file for Principle Component Analysis (PCA) (this is in linix):
