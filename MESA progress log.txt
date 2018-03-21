@@ -62,6 +62,7 @@ R Studio Set Up:
 	png(filename="mesa_all_ibd.png",res=100)
 	ggplot(data=ibd,aes(x=Z0,y=Z1))+geom_point(alpha=0.25)+theme_bw()
 	dev.off()
+	** png() and dev.off() save the ggplot()  
 	
 #10 Back in Plink: Separate Populations
 	plink --bfile MESA_all_merged_autosome.geno0.01 --keep afa_samples.txt --make-bed --out MESA_AFA_merged_autosome.geno0.01
@@ -92,8 +93,8 @@ Create GGplot for individual populations:
 	dev.off()
 	
 	ibd_cau <- read.table(my.dir %&% "MESA_CAU_merged_autosome.geno0.01.LD3.0.05.genome",header=T)
-	png(filename="mesa_his_ibd.png",res=100)
-	ggplot(data=ibd_his,aes(x=Z0,y=Z1))+geom_point(alpha=0.25)+theme_bw()
+	png(filename="mesa_cau_ibd.png",res=100)
+	ggplot(data=ibd_cau,aes(x=Z0,y=Z1))+geom_point(alpha=0.25)+theme_bw()
 	dev.off()
 
 Create table for Outliers:
