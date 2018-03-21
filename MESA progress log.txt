@@ -282,6 +282,21 @@ For Megred:
 	numoutlieriter: 0
 	numoutlierevec: 2
 	outliersigmathresh: 6
+	
+#25 Run PCA
+	AFA:
+	smartpca -p AFA_unmerged.par
+	smartpca -p AFA_merged.par 
+
+	HIS:
+	smartpca -p HIS_unmerged.par
+	smartpca -p HIS_merged.par 
+
+	CAU:
+	smartpca -p CAU_unmerged.par
+	smartpca -p CAU_merged.par 
+
+#26 Plot PCs in R
 
 
 
