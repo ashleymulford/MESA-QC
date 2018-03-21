@@ -4,6 +4,7 @@ cd - change directory, type this and then the directory to get into
 cd .. - go back out of a directory
 cp - copy, type cp /to/file /from
 pwd - print working directory
+mv - move, for files, from one dir to another
 
 ashley@wheelerlab3:~/Scripts$ == /home/ashley/Scripts
 
@@ -121,6 +122,7 @@ Create table for Outliers:
 	mkdir MESAfiles
 	then within MESAfiles; mkdir MESAnewfiles
 	working dir is now: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles
+	then move existing files to MESAfiles, while creating all new files from here onward in MESAnewfiles
  
 #17 Convert from hg18 to hg19:
 Must make ped/map files:
