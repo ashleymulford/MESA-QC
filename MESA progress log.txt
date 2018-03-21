@@ -208,9 +208,80 @@ Use python script for conversion, script uses ped/map files:
 	awk '{print $1, $2, $3, $4, $5, 1}' MESA_HIS_mergedHAPMAP0.05.fam > MESA_HIS_merged_hapmap.4pca.fam
 	awk '{print $1, $2, $3, $4, $5, 1}' MESA_CAU_mergedHAPMAP0.05.fam > MESA_CAU_merged_hapmap.4pca.fam
 
-#24 
+#24 Make .par file for Principle Components Analysis (PCA) 
+For Unmerged:
+	AFA: 
+	type in: nano AFA_unmerged.par to create file, then paste in:
+	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_autosome.geno0.01.sd.pruned.ped
+	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_autosome.geno0.01.sd.pruned.map
+	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_autosome.geno0.01.sd.4pca.fam
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_only_autosome.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_only_autosome.eval
+	numoutevec: 10
+	numoutlieriter: 0
+	numoutlierevec: 2
+	outliersigmathresh: 6
 	
+	HIS:
+	type in: nano HIS_unmerged.par to create file, then paste in:
+	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_autosome.geno0.01.sd.pruned.ped
+	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_autosome.geno0.01.sd.pruned.map
+	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_autosome.geno0.01.sd.4pca.fam
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_only_autosome.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_only_autosome.eval
+	numoutevec: 10
+	numoutlieriter: 0
+	numoutlierevec: 2
+	outliersigmathresh: 6
+	
+	CAU:
+	type in: nano CAU_unmerged.par to create file, then paste in:
+	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_autosome.geno0.01.sd.pruned.ped
+	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_autosome.geno0.01.sd.pruned.map
+	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_autosome.geno0.01.sd.4pca.fam
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_only_autosome.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_only_autosome.eval
+	numoutevec: 10
+	numoutlieriter: 0
+	numoutlierevec: 2
+	outliersigmathresh: 6
 
+For Megred:
+	AFA:
+	type in: nano AFA_merged.par to create file, then paste in:
+	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_mergedHAPMAP0.05.ped
+	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_mergedHAPMAP0.05.map
+	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_merged_hapmap.4pca.fam
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_merged_auto.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_merged_auto.eval
+	numoutevec: 10
+	numoutlieriter: 0
+	numoutlierevec: 2
+	outliersigmathresh: 6
+	
+	HIS:
+	type in: nano HIS_merged.par to create file, then paste in:
+	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_mergedHAPMAP0.05.ped
+	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_mergedHAPMAP0.05.map
+	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_merged_hapmap.4pca.fam
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_merged_auto.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_merged_auto.eval
+	numoutevec: 10
+	numoutlieriter: 0
+	numoutlierevec: 2
+	outliersigmathresh: 6
+
+	CAU:
+	type in: nano CAU_merged.par to create file, then paste in:
+	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_mergedHAPMAP0.05.ped
+	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_mergedHAPMAP0.05.map
+	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_merged_hapmap.4pca.fam
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_merged_auto.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_merged_auto.eval
+	numoutevec: 10
+	numoutlieriter: 0
+	numoutlierevec: 2
+	outliersigmathresh: 6
 
 
 
