@@ -211,7 +211,7 @@ Use python script for conversion, script uses ped/map files:
 	awk '{print $1, $2, $3, $4, $5, 1}' MESA_HIS_mergedHAPMAP0.05.fam > MESA_HIS_merged_hapmap.4pca.fam
 	awk '{print $1, $2, $3, $4, $5, 1}' MESA_CAU_mergedHAPMAP0.05.fam > MESA_CAU_merged_hapmap.4pca.fam
 
-#24 Make .par file for Principle Components Analysis (PCA) 
+#24 Make .par file for Principle Components Analysis (PCA):
 For Unmerged:
 	AFA: 
 	type in: nano AFA_unmerged.par to create file, then paste in:
@@ -286,7 +286,7 @@ For Megred:
 	numoutlierevec: 2
 	outliersigmathresh: 6
 	
-#25 Run PCA
+#25 Run PCA:
 	AFA:
 	smartpca -p AFA_unmerged.par
 	smartpca -p AFA_merged.par 
@@ -299,7 +299,13 @@ For Megred:
 	smartpca -p CAU_unmerged.par
 	smartpca -p CAU_merged.par 
 
-#26 Plot PCs in R
+#26 Plot PCs in R:
 
 
+#27 Calculate allele freq:
+	plink --bfile  MESA_AFA_lifted_final --freq --out  MESA_AFA_lifted_final_freq
+	plink --bfile  MESA_HIS_lifted_final --freq --out  MESA_HIS_lifted_final_freq
+	plink --bfile  MESA_CAU_lifted_final --freq --out  MESA_CAU_lifted_final_freq
+	
+#28 
 
