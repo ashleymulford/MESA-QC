@@ -255,8 +255,8 @@ For Megred:
 	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_mergedHAPMAP0.05.ped
 	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_mergedHAPMAP0.05.map
 	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_AFA_merged_hapmap.4pca.fam
-	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_merged_auto.evec
-	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_merged_auto.eval
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_hap_autosome.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/afa_hap_autosome.eval
 	numoutevec: 10
 	numoutlieriter: 0
 	numoutlierevec: 2
@@ -267,8 +267,8 @@ For Megred:
 	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_mergedHAPMAP0.05.ped
 	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_mergedHAPMAP0.05.map
 	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_HIS_merged_hapmap.4pca.fam
-	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_merged_auto.evec
-	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_merged_auto.eval
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_hap_autosome.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/his_hap_autosome.eval
 	numoutevec: 10
 	numoutlieriter: 0
 	numoutlierevec: 2
@@ -279,8 +279,8 @@ For Megred:
 	genotypename: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_mergedHAPMAP0.05.ped
 	snpname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_mergedHAPMAP0.05.map
 	indivname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/MESA_CAU_merged_hapmap.4pca.fam
-	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_merged_auto.evec
-	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_merged_auto.eval
+	evecoutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_hap_autosome.evec
+	evaloutname: /home/ashley/Plinkfiles/MESAfiles/MESAnewfiles/cau_hap_autosome.eval
 	numoutevec: 10
 	numoutlieriter: 0
 	numoutlierevec: 2
