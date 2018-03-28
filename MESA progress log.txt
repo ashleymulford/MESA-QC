@@ -300,7 +300,7 @@ For Megred:
 	smartpca -p CAU_merged.par 
 
 #26 Plot PCs in R:
-Example with AFA:
+Example with AFA, repeat with HIS and CAU:
 	hapmappopinfo <- read.table("/home/lauren/MESA_dbGaP_55081/all_mesa_merged/hapmap_hg19/pop_HM3_hg19_forPCA.txt") %>% select(V1,V3)
 	colnames(hapmappopinfo) <- c("pop","IID")
 
@@ -334,5 +334,8 @@ Calcuate proportion variance explained by each PC:
 	plink --bfile  MESA_HIS_lifted_final --freq --out  MESA_HIS_lifted_final_freq
 	plink --bfile  MESA_CAU_lifted_final --freq --out  MESA_CAU_lifted_final_freq
 	
-#28 
+#28 Run perl file to check samples against 1000g:
+	perl HRC-1000G-check-bim.pl -b MESA_AFA_lifted_final.bim -f MESA_AFA_lifted_final_freq.frq -r 1000GP_Phase3_combined.legend -g
+	perl HRC-1000G-check-bim.pl -b MESA_HIS_lifted_final.bim -f MESA_HIS_lifted_final_freq.frq -r 1000GP_Phase3_combined.legend -g
+	perl HRC-1000G-check-bim.pl -b MESA_CAU_lifted_final.bim -f MESA_CAU_lifted_final_freq.frq -r 1000GP_Phase3_combined.legend -g
 
