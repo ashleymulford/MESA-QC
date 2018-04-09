@@ -1,0 +1,14 @@
+Genotype and Phenotype GWAS:
+
+#1 Phenotype files in this directory:
+    /home/wheelerlab3/Data/55081_MESA/PhenoGenotypeFiles/RootStudyConsentSet_phs000209.MESA.v13.p3.c1.HMB/PhenotypeFiles 
+    ##use phs000209.v13.pht003659.vl.p3.cl.MESA_TimeToDiabetes.HMB.txt.gz
+
+#2 Genotype files after imputation and filtering with maf 0.01 and r^2 0.8
+    AFA in /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages
+    HIS in /home/lauren/imputation_mesa_2/his_imp/UMich_dosages
+    CAU in /home/lauren/imputation_mesa_2/cau_imp/UMich_dosages
+    ##use maf and r^2 files, not expression files
+    
+    
+#3 
