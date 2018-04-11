@@ -8,8 +8,37 @@ Genotype and Phenotype GWAS:
     AFA in /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages
     HIS in /home/lauren/imputation_mesa_2/his_imp/UMich_dosages
     CAU in /home/lauren/imputation_mesa_2/cau_imp/UMich_dosages
-    ##use maf and r^2 files, not expression files - want to use all individuals
+    Individual chromosomes:
+        chr1.maf0.01.r20.8noamig.dosage.txt.gz
+        chr2.maf0.01.r20.8noamig.dosage.txt.gz
+        chr3.maf0.01.r20.8noamig.dosage.txt.gz
+        chr4.maf0.01.r20.8noamig.dosage.txt.gz
+        chr5.maf0.01.r20.8noamig.dosage.txt.gz
+        chr6.maf0.01.r20.8noamig.dosage.txt.gz
+        chr7.maf0.01.r20.8noamig.dosage.txt.gz
+        chr8.maf0.01.r20.8noamig.dosage.txt.gz
+        chr9.maf0.01.r20.8noamig.dosage.txt.gz
+        chr10.maf0.01.r20.8noamig.dosage.txt.gz
+        chr11.maf0.01.r20.8noamig.dosage.txt.gz
+        chr12.maf0.01.r20.8noamig.dosage.txt.gz
+        chr13.maf0.01.r20.8noamig.dosage.txt.gz
+        chr14.maf0.01.r20.8noamig.dosage.txt.gz
+        chr15.maf0.01.r20.8noamig.dosage.txt.gz
+        chr16.maf0.01.r20.8noamig.dosage.txt.gz
+        chr17.maf0.01.r20.8noamig.dosage.txt.gz
+        chr18.maf0.01.r20.8noamig.dosage.txt.gz
+        chr19.maf0.01.r20.8noamig.dosage.txt.gz
+        chr20.maf0.01.r20.8noamig.dosage.txt.gz
+        chr21.maf0.01.r20.8noamig.dosage.txt.gz
+        chr22.maf0.01.r20.8noamig.dosage.txt.gz
+    ##use maf and r^2 files - want to use all individuals
     
+#3 Convert dosage files to bed/bim/fam files using plink2:
+    ##In dir /home/ashley/Plinkfiles/MESAfiles/MESAimputed
+    For AFA chr 1-22:
+    for i in {1..22};do plink2 --import-dosage /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages/chr${i}.maf0.01.r20.8noamig.dosage.txt.gz/ noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out MESA_AFA_all_imputed.chr${i}.geno --fam /home/ashley/Plinkfiles/MESAfiles/MESA_AFA_merged_autosome.geno0.01.fam;done
+    ##Do with chr 1-22 for all three pops (AFA, HIS, CAU)
     
-#3 Convert dosage files to plink format using plink2:
-    plink2 --import-dosage /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out test --fam /home/angela/plosgen_revisions/FHS/PCA/FHS.fam
+#4
+
+
