@@ -12,4 +12,4 @@ Genotype and Phenotype GWAS:
     
     
 #3 Convert dosage files to plink format using plink2:
-    plink2 --import-dosage Data/FHS_dosages/chr22.maf0.01.r20.8.dosage.txt.gz noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out test --fam /home/angela/plosgen_revisions/FHS/PCA/FHS.fam
+    plink2 --import-dosage /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out test --fam /home/angela/plosgen_revisions/FHS/PCA/FHS.fam
