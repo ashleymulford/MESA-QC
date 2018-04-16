@@ -41,6 +41,12 @@ Genotype and Phenotype GWAS:
     
 #4 Merge chr within pop
     For AFA: 22 files to 1 files
+    first: make txt file for --merge-list
+    nano
+    list chr 2-22 in rows, bed/bim/fam separated in each row
+    
+    plink --bfile MESA_AFA_all_imputed.chr1.geno --merge-list AFA-make-list.txt --make-bed --out MESA_AFA_allchr_imputed.geno
+    ***gives error, but produces missnp file, exclude this
     
 #5 Merge between pops:
     3 pops to 1 total group
