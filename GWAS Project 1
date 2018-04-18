@@ -33,22 +33,18 @@ Genotype and Phenotype GWAS:
         chr22.maf0.01.r20.8noamig.dosage.txt.gz
     ##use maf and r^2 files - want to use all individuals
     
+#4 Merge chr within pop while files are in dosage format
+    For AFA: 22 files to 1 files
+    zcat /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages/chr*.maf0.01.r20.8noamig.dosage.txt.gz > AFA.alldosage.txt
+    gzip AFA.alldosage.txt
+        ##produces AFA.all.dosage.txt.gz
+    ##Repeat with CAU and HIS
+    
 #3 Convert dosage files to bed/bim/fam files using plink2:
     ##In dir /home/ashley/Plinkfiles/MESAfiles/MESAimputed
-    For AFA chr 1-22:
-    for i in {1..22};do plink2 --import-dosage /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages/chr${i}.maf0.01.r20.8noamig.dosage.txt.gz/ noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out MESA_AFA_all_imputed.chr${i}.geno --fam /home/ashley/Plinkfiles/MESAfiles/MESA_AFA_merged_autosome.geno0.01.fam;done
-    ##Do with chr 1-22 for all three pops (AFA, HIS, CAU)
+    For AFA:
+    plink2 --import-dosage AFA.alldosage.txt.gz/ noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out MESA_AFA_all_imputed.geno --fam /home/ashley/Plinkfiles/MESAfiles/MESA_AFA_merged_autosome.geno0.01.fam
+    ##Repeat with CAU and HIS 
     
-#4 Merge chr within pop
-    For AFA: 22 files to 1 files
-    first: make txt file for --merge-list
-    nano
-    list chr 2-22 in rows, bed/bim/fam separated in each row
     
-    plink --bfile MESA_AFA_all_imputed.chr1.geno --merge-list AFA-make-list.txt --make-bed --out MESA_AFA_allchr_imputed.geno
-    ***gives error, but produces missnp file, exclude this
     
-#5 Merge between pops:
-    3 pops to 1 total group
-
-
