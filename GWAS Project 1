@@ -33,18 +33,32 @@ Genotype and Phenotype GWAS:
         chr22.maf0.01.r20.8noamig.dosage.txt.gz
     ##use maf and r^2 files - want to use all individuals
     
-#4 Merge chr within pop while files are in dosage format
-    For AFA: 22 files to 1 files
-    zcat /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages/chr*.maf0.01.r20.8noamig.dosage.txt.gz > AFA.alldosage.txt
-    gzip AFA.alldosage.txt
-        ##produces AFA.all.dosage.txt.gz
-    ##Repeat with CAU and HIS
-    
 #3 Convert dosage files to bed/bim/fam files using plink2:
     ##In dir /home/ashley/Plinkfiles/MESAfiles/MESAimputed
-    For AFA:
-    plink2 --import-dosage AFA.alldosage.txt.gz/ noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out MESA_AFA_all_imputed.geno --fam /home/ashley/Plinkfiles/MESAfiles/MESA_AFA_merged_autosome.geno0.01.fam
-    ##Repeat with CAU and HIS 
+    For AFA chr 1-22:
+    for i in {1..22};do plink2 --import-dosage /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages/chr${i}.maf0.01.r20.8noambig.dosage.txt.gz noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out MESA_AFA_all_imputed.chr${i}.geno --fam /home/ashley/Plinkfiles/MESAfiles/MESA_AFA_merged_autosome.geno0.01.fam;done
+   ##Repeat with CAU and HIS 
+   
+ 
+#4 Merge chr within pop:
+    For AFA: 22 files to 1 file
+        Must first convert bfile to VCF:
+    for i in {1..22};do plink --bfile MESA_AFA_all_imputed.chr${i}.geno --recode vcf-iid --out MESA_AFA_all_imputed.chr${i}.geno_vcf;done
+        ##Should produce 22 VCF files
+        Filter out 3+ alleles in VCF:
+    for i in {1..22};do vcftools --vcf MESA_AFA_all_imputed.chr${i}.geno_vcf.vcf --min-alleles 2 --max-alleles 2;done
+        ##Should produce 22 filtered VCF files
+        Then merge in VCF format:
+    vcftools vcf-merge MESA_AFA_all_imputed.chr1.geno_vcf.vcf.gz B.vcf.gz C.vcf.gz | bgzip -c > MESA_AFA_all_imputed.geno_vcf.vcf.gz
+        ##Should produce 1 zipped VCF file
+    ##Repeat with CAU and HIS
     
+#5 Merge 3 pops:
+    3 files to 1 file; VCF format
+    vcftools vcf-merge MESA_AFA_all_imputed.geno_vcf.vcf.gz MESA_HIS_all_imputed.geno_vcf.vcf.gz MESA_CAU_all_imputed.geno_vcf.vcf.gz | bgzip -c > MESA_all_imputed.geno_vcf.vcf.gz
+    
+    
+    
+
     
     
