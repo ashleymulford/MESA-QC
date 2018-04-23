@@ -49,7 +49,10 @@ Genotype and Phenotype GWAS:
     for i in {1..22};do vcftools --vcf MESA_AFA_all_imputed.chr${i}.geno_vcf.vcf --min-alleles 2 --max-alleles 2;done
         ##Should produce 22 filtered VCF files
         Then merge in VCF format:
-    vcftools vcf-merge MESA_AFA_all_imputed.chr1.geno_vcf.vcf.gz B.vcf.gz C.vcf.gz | bgzip -c > MESA_AFA_all_imputed.geno_vcf.vcf.gz
+    vcftools vcf-merge MESA_AFA_all_imputed.chr1.geno_vcf.vcf MESA_AFA_all_imputed.chr2.geno_vcf.vcf MESA_AFA_all_imputed.chr3.geno_vcf.vcf MESA_AFA_all_imputed.chr4.geno_vcf.vcf MESA_AFA_all_imputed.chr5.geno_vcf.vcf 
+    MESA_AFA_all_imputed.chr6.geno_vcf.vcf MESA_AFA_all_imputed.chr7.geno_vcf.vcf MESA_AFA_all_imputed.chr8.geno_vcf.vcf MESA_AFA_all_imputed.chr9.geno_vcf.vcf MESA_AFA_all_imputed.chr10.geno_vcf.vcf MESA_AFA_all_imputed.chr11.geno_vcf.vcf
+    MESA_AFA_all_imputed.chr12.geno_vcf.vcf MESA_AFA_all_imputed.chr13.geno_vcf.vcf MESA_AFA_all_imputed.chr14.geno_vcf.vcf MESA_AFA_all_imputed.chr15.geno_vcf.vcf MESA_AFA_all_imputed.chr16.geno_vcf.vcf MESA_AFA_all_imputed.chr17.geno_vcf.vcf 
+    MESA_AFA_all_imputed.chr18.geno_vcf.vcf MESA_AFA_all_imputed.chr19.geno_vcf.vcf MESA_AFA_all_imputed.chr20.geno_vcf.vcf MESA_AFA_all_imputed.chr21.geno_vcf.vcf MESA_AFA_all_imputed.chr22.geno_vcf.vcf | bgzip -c > MESA_AFA_all_imputed.geno.vcf.gz
         ##Should produce 1 zipped VCF file
     ##Repeat with CAU and HIS
     
