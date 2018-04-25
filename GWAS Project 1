@@ -38,30 +38,24 @@ Genotype and Phenotype GWAS:
     For AFA chr 1-22:
     for i in {1..22};do plink2 --import-dosage /home/lauren/imputation_mesa_2/afa_imp/UMich_dosages/chr${i}.maf0.01.r20.8noambig.dosage.txt.gz noheader skip0=1 skip1=1 chr-col-num=1 pos-col-num=3 format=1 --make-bed --out MESA_AFA_all_imputed.chr${i}.geno --fam /home/ashley/Plinkfiles/MESAfiles/MESA_AFA_merged_autosome.geno0.01.fam;done
    ##Repeat with CAU and HIS 
-   
- 
+
 #4 Merge chr within pop:
     For AFA: 22 files to 1 file
         Must first convert bfile to VCF:
     for i in {1..22};do plink --bfile MESA_AFA_all_imputed.chr${i}.geno --recode vcf-iid --out MESA_AFA_all_imputed.chr${i}.geno_vcf;done
         ##Should produce 22 VCF files
+        Then merge in VCF:
+    plink --bfile MESA_AFA_all_imputed.filtered.chr1.geno --bmerge MESA_AFA_all_imputed.filtered.chr2.geno.bed MESA_AFA_all_imputed.filtered.chr2.geno.bim MESA_AFA_all_imputed.filtered.chr2.geno.fam --make-bed --out MESA_AFA_all_imputed.filtered.chrmerged1.2.geno.bed
+        ##Should produce 1 VCF file
         Filter out 3+ alleles in VCF:
     for i in {1..22};do vcftools --vcf MESA_AFA_all_imputed.chr${i}.geno_vcf.vcf --min-alleles 2 --max-alleles 2;done
-        ##Should produce 22 filtered VCF files
-        Then merge in VCF format:
-    vcftools vcf-merge MESA_AFA_all_imputed.chr1.geno_vcf.vcf MESA_AFA_all_imputed.chr2.geno_vcf.vcf MESA_AFA_all_imputed.chr3.geno_vcf.vcf MESA_AFA_all_imputed.chr4.geno_vcf.vcf MESA_AFA_all_imputed.chr5.geno_vcf.vcf 
-    MESA_AFA_all_imputed.chr6.geno_vcf.vcf MESA_AFA_all_imputed.chr7.geno_vcf.vcf MESA_AFA_all_imputed.chr8.geno_vcf.vcf MESA_AFA_all_imputed.chr9.geno_vcf.vcf MESA_AFA_all_imputed.chr10.geno_vcf.vcf MESA_AFA_all_imputed.chr11.geno_vcf.vcf
-    MESA_AFA_all_imputed.chr12.geno_vcf.vcf MESA_AFA_all_imputed.chr13.geno_vcf.vcf MESA_AFA_all_imputed.chr14.geno_vcf.vcf MESA_AFA_all_imputed.chr15.geno_vcf.vcf MESA_AFA_all_imputed.chr16.geno_vcf.vcf MESA_AFA_all_imputed.chr17.geno_vcf.vcf 
-    MESA_AFA_all_imputed.chr18.geno_vcf.vcf MESA_AFA_all_imputed.chr19.geno_vcf.vcf MESA_AFA_all_imputed.chr20.geno_vcf.vcf MESA_AFA_all_imputed.chr21.geno_vcf.vcf MESA_AFA_all_imputed.chr22.geno_vcf.vcf | bgzip -c > MESA_AFA_all_imputed.geno.vcf.gz
-        ##Should produce 1 zipped VCF file
-    ##Repeat with CAU and HIS
+        ##Should produce 1 filtered VCF file
+        ##Repeat with CAU and HIS
     
 #5 Merge 3 pops:
     3 files to 1 file; VCF format
-    vcftools vcf-merge MESA_AFA_all_imputed.geno_vcf.vcf.gz MESA_HIS_all_imputed.geno_vcf.vcf.gz MESA_CAU_all_imputed.geno_vcf.vcf.gz | bgzip -c > MESA_all_imputed.geno_vcf.vcf.gz
-    
-    
+    vcftools --vcf-merge MESA_AFA_all_imputed.geno_vcf.vcf.gz MESA_HIS_all_imputed.geno_vcf.vcf.gz MESA_CAU_all_imputed.geno_vcf.vcf.gz | bgzip -c > MESA_all_imputed.geno_vcf.vcf.gz
     
 
-    
-    
+    Convert vcf to bed/bim/fam:
+    for i in {1..22};do plink --vcf MESA_AFA_all_imputed.chr${i}.geno_vcf.vcf --make-bed --out MESA_AFA_all_imputed.filtered.chr${i}.geno;done
